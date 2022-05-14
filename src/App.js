@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import './App.css';
+import Header from './components/header';
+import Rides from './components/rides';
 
 function App() {
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://assessment.api.vweb.app/user")
+      .then(res => {
+        setUser(res.data);
+      })
+
+  }, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header user={user} />
+      <Rides user={user} />
     </div>
   );
 }
